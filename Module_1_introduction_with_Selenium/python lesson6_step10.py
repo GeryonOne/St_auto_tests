@@ -5,12 +5,12 @@ import time
 browser = webdriver.Chrome()
 
 try:
-    start_link = "http://suninjuly.github.io/registration2.html"
+    start_link = "http://suninjuly.github.io/registration1.html"
     browser.get(start_link)
 
-    first_name = browser.find_element(By.XPATH, "//input[@placeholder='Input your first name']")
-    last_name = browser.find_element(By.XPATH, "//input[@placeholder='Input your last name']")
-    email = browser.find_element(By.XPATH, "//input[@placeholder='Input your email']")
+    first_name = browser.find_element(By.CSS_SELECTOR, 'input[placeholder="Input your first name"]')
+    last_name = browser.find_element(By.CSS_SELECTOR, 'input[placeholder="Input your last name"]')
+    email = browser.find_element(By.CSS_SELECTOR, 'input[placeholder="Input your email"]')
 
     first_name.send_keys('Ivan')
     last_name.send_keys('Slomov')
@@ -27,6 +27,6 @@ try:
     assert "Congratulations! You have successfully registered!" == welcome_text
 
 finally:
-    time.sleep(30)
+    time.sleep(10)
     browser.quit()
 
