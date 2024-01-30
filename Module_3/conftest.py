@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -12,16 +14,17 @@ def browser_instance():
     browser.quit()
 
 
+# Для корректной работы нужен валидный пароль в фикстуре
 @pytest.fixture(scope="function")
 def login(browser_instance):
     print("\nlogging in..")
-    link = "https://stepik.org/lesson/236895/step/1"
+    link = "https://stepik.org/catalog"
     browser_instance.implicitly_wait(5)
 
     browser_instance.get(link)
 
     log_in = "askraizek@yandex.ru"
-    password = "pass123"
+    password = ""
 
     login_button = browser_instance.find_element(By.CLASS_NAME, 'navbar__auth_login')
 
@@ -36,5 +39,8 @@ def login(browser_instance):
     enter_button = browser_instance.find_element(By.CSS_SELECTOR, "button[type='submit']")
     enter_button.click()
 
-    # Спорный код
-    yield browser_instance
+    time.sleep(3)
+
+    print("\nLogin successful")
+
+    yield browser_instance  # provide the browser instance to the test
