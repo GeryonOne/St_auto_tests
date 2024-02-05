@@ -3,12 +3,29 @@ import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+
+
+def pytest_addoption(parser):
+    parser.addoption('--browser_name', action='store', default='chrome', help="Choose browser: Chrome or Firefox")
 
 
 @pytest.fixture(scope="function")
-def browser_instance():
-    print("\nstart browser for test")
-    browser = webdriver.Chrome()
+def browser(request):
+    options = Options()
+    options.add_experimental_option('prefs', {'intl.accept_languages': })
+    browser_name = request.config.getoption("browser_name")
+    browser = None
+
+    if browser_name == "chrome" or browser_name == "Chrome":
+        print("\nStart chrome browser for test..")
+        browser = webdriver.Chrome(options=options)
+
+    elif browser_name == "firefox" or browser_name == "Firefox":
+        print("\nStart firefox browser for test..")
+        browser = webdriver.Firefox()
+    else:
+        raise pytest.UsageError("--browser_name should be chrome or firefox")
     yield browser
     print("\nquit browser..")
     browser.quit()

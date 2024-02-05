@@ -16,7 +16,7 @@ class TestLinks:
                  "https://stepik.org/lesson/236904/step/1", "https://stepik.org/lesson/236905/step/1"]
 
     @pytest.mark.parametrize('link', links_arr)
-    def test_links(self, browser_instance, login, link):
+    def test_links(self, browser, login, link):
         current_link = link
         browser = login
         browser.implicitly_wait(5)
